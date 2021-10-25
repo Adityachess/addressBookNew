@@ -1,6 +1,8 @@
 package com.bridgelabz.addressbooknew;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBook {
@@ -206,6 +208,31 @@ public class AddressBook {
 				System.out.println(object.first_name + " " + object.last_name);
 			}
 		}
+	}
 
+	public void viewPersonByState(String state) {
+		Map<String, String> stateMap = new HashMap<String, String>();
+		for (int j = 0; j < contact.size(); j++) {
+			AddressBook object = contact.get(j);
+			stateMap.put(object.first_name, object.state);
+		}
+		for (Map.Entry m : stateMap.entrySet()) {
+			if (m.getValue().equals(state)) {
+				System.out.println(m.getKey());
+			}
+		}
+	}
+
+	public void viewPersonByCity(String city) {
+		Map<String, String> cityMap = new HashMap<String, String>();
+		for (int j = 0; j < contact.size(); j++) {
+			AddressBook object = contact.get(j);
+			cityMap.put(object.first_name, object.city);
+		}
+		for (Map.Entry m : cityMap.entrySet()) {
+			if (m.getValue().equals(city)) {
+				System.out.println(m.getKey());
+			}
+		}
 	}
 }
