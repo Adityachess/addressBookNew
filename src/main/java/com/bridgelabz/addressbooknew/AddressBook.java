@@ -2,8 +2,11 @@ package com.bridgelabz.addressbooknew;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBook {
 	public ArrayList<AddressBook> contact = new ArrayList<>();
@@ -210,29 +213,78 @@ public class AddressBook {
 		}
 	}
 
-	public void viewPersonByState(String state) {
-		Map<String, String> stateMap = new HashMap<String, String>();
+	/*
+	 * method to view a particular contact based on state
+	 */
+	public void viewPersonByState() {
+		Map<String, List<String>> stateMap = new HashMap<>();
 		for (int j = 0; j < contact.size(); j++) {
 			AddressBook object = contact.get(j);
-			stateMap.put(object.first_name, object.state);
+			if (stateMap.containsKey(object.state)) {
+				List<String> temp = stateMap.get(object.state);
+				temp.add(object.first_name);
+				stateMap.put(object.state, temp);
+			} else {
+				List<String> temp = new ArrayList<>();
+				temp.add(object.first_name);
+				stateMap.put(object.state, temp);
+			}
 		}
 		for (Map.Entry m : stateMap.entrySet()) {
-			if (m.getValue().equals(state)) {
-				System.out.println(m.getKey());
-			}
+
+			System.out.println(m.getKey() + " : " + m.getValue());
+			System.out.println("There are " + ((List<String>) m.getValue()).size() + " persons in state " + m.getKey());
 		}
 	}
 
-	public void viewPersonByCity(String city) {
-		Map<String, String> cityMap = new HashMap<String, String>();
+	/*
+	 * method to view a particular contact based on city
+	 */
+	public void viewPersonByCity() {
+		Map<String, List<String>> cityMap = new HashMap<>();
 		for (int j = 0; j < contact.size(); j++) {
 			AddressBook object = contact.get(j);
-			cityMap.put(object.first_name, object.city);
+			if (cityMap.containsKey(object.city)) {
+				List<String> temp = cityMap.get(object.city);
+				temp.add(object.first_name);
+				cityMap.put(object.city, temp);
+			} else {
+				List<String> temp = new ArrayList<>();
+				temp.add(object.first_name);
+				cityMap.put(object.city, temp);
+			}
 		}
 		for (Map.Entry m : cityMap.entrySet()) {
-			if (m.getValue().equals(city)) {
-				System.out.println(m.getKey());
-			}
+
+			System.out.println(m.getKey() + " : " + m.getValue());
+			System.out.println("There are " + ((List<String>) m.getValue()).size() + " persons in city " + m.getKey());
+
+		}
+	}
+
+	/*
+	 * method to sort the list based on name
+	 */
+	public void sortByName() {
+		Map<String, AddressBook> map = new HashMap<String, AddressBook>();
+		for (int j = 0; j < contact.size(); j++) {
+			AddressBook object = contact.get(j);
+			map.put(object.first_name, object);
+		}
+		Map<String, AddressBook> sortedMap = map.entrySet().stream().sorted(Map.Entry.comparingByKey())
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue,
+						LinkedHashMap::new));
+
+		for (Map.Entry<String, AddressBook> entry : sortedMap.entrySet()) {
+			System.out.println("First Name:" + entry.getValue().first_name);
+			System.out.println("Last Name:" + entry.getValue().last_name);
+			System.out.println("Address:" + entry.getValue().address);
+			System.out.println("City:" + entry.getValue().city);
+			System.out.println("State:" + entry.getValue().state);
+			System.out.println("Zip:" + entry.getValue().zip);
+			System.out.println("Phone number:" + entry.getValue().phone_number);
+			System.out.println("E-mail:" + entry.getValue().email);
+			System.out.println("--------------------------------------------");
 		}
 	}
 }
