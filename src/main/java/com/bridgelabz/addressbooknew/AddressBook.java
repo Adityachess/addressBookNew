@@ -296,13 +296,13 @@ public class AddressBook {
 			}
 		} else if (option == 3) {
 			for (int j = 0; j < contact.size(); j++) {
-				BookAddress object = contact.get(j);
+				AddressBook object = contact.get(j);
 				if (map.containsKey(object.state)) {
-					List<BookAddress> temp = map.get(object.state);
+					List<AddressBook> temp = map.get(object.state);
 					temp.add(object);
 					map.put(object.state, temp);
 				} else {
-					List<BookAddress> temp = new ArrayList<>();
+					List<AddressBook> temp = new ArrayList<>();
 					temp.add(object);
 					map.put(object.state, temp);
 				}
@@ -326,7 +326,7 @@ public class AddressBook {
 		Map<String, List<AddressBook>> sortedMap = map.entrySet().stream().sorted(Map.Entry.comparingByKey())
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue,
 						LinkedHashMap::new));
-		for (Map.Entry<String, List<BookAddress>> entry : sortedMap.entrySet()) {
+		for (Map.Entry<String, List<AddressBook>> entry : sortedMap.entrySet()) {
 			for (AddressBook a : entry.getValue()) {
 				System.out.println("First Name:" + a.first_name);
 				System.out.println("Last Name:" + a.last_name);
