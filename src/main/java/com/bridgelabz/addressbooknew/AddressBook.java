@@ -1,6 +1,9 @@
 package com.bridgelabz.addressbooknew;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBook {
@@ -91,7 +94,7 @@ public class AddressBook {
 		} else {
 			System.out.println("Address book contains following contacts!!!");
 			for (int j = 0; j < contact.size(); j++) {
-				AddressBook object = contact.get(j);
+			AddressBook object = contact.get(j);
 				System.out.println("Contact details of person" + j);
 				System.out.println("first Name:" + object.first_name);
 				System.out.println("last name:" + object.last_name);
@@ -206,6 +209,54 @@ public class AddressBook {
 				System.out.println(object.first_name + " " + object.last_name);
 			}
 		}
+	}
 
+	/*
+	 * method to view a particular contact based on state
+	 */
+	public void viewPersonByState() {
+		Map<String, List<String>> stateMap = new HashMap<>();
+		for (int j = 0; j < contact.size(); j++) {
+		AddressBook object = contact.get(j);
+			if (stateMap.containsKey(object.state)) {
+				List<String> temp = stateMap.get(object.state);
+				temp.add(object.first_name);
+				stateMap.put(object.state, temp);
+			} else {
+				List<String> temp = new ArrayList<>();
+				temp.add(object.first_name);
+				stateMap.put(object.state, temp);
+			}
+		}
+		for (Map.Entry m : stateMap.entrySet()) {
+
+			System.out.println(m.getKey() + " : " + m.getValue());
+			System.out.println("There are " + ((List<String>) m.getValue()).size() + " persons in state " + m.getKey());
+		}
+	}
+
+	/*
+	 * method to view a particular contact based on city
+	 */
+	public void viewPersonByCity() {
+		Map<String, List<String>> cityMap = new HashMap<>();
+		for (int j = 0; j < contact.size(); j++) {
+			AddressBook object = contact.get(j);
+			if (cityMap.containsKey(object.city)) {
+				List<String> temp = cityMap.get(object.city);
+				temp.add(object.first_name);
+				cityMap.put(object.city, temp);
+			} else {
+				List<String> temp = new ArrayList<>();
+				temp.add(object.first_name);
+				cityMap.put(object.city, temp);
+			}
+		}
+		for (Map.Entry m : cityMap.entrySet()) {
+
+			System.out.println(m.getKey() + " : " + m.getValue());
+			System.out.println("There are " + ((List<String>) m.getValue()).size() + " persons in city " + m.getKey());
+
+		}
 	}
 }
